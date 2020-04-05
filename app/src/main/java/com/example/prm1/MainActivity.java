@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void openAddDebtor() {
         Intent intent = new Intent(this, EditDebtor.class);
-        startActivityForResult(intent,AddActivityID);
+        startActivityForResult(intent, AddActivityID);
     }
 
     private void refreshSum() {
@@ -102,16 +102,21 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == RESULT_OK) {
+            if (requestCode == AddActivityID) {
+                Debtor newDebetor = new Debtor(data.getStringExtra("nameOut"), data.getDoubleExtra("debtOut", 0));
+                arrayAdapter.add(newDebetor);
+                arrayAdapter.notifyDataSetChanged();
+            }
+            if (requestCode == EditActivityID) {
+                Debtor updateDebetor = new Debtor(data.getStringExtra("nameOut"), data.getDoubleExtra("debtOut", 0));
+                arrayAdapter.insert(updateDebetor, data.getIntExtra("id", -1));
+                arrayAdapter.remove(arrayAdapter.getItem(data.getIntExtra("id", -1) + 1));
+                arrayAdapter.notifyDataSetChanged();
+            }
+        }
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==AddActivityID){
-            Debtor newDebetor = new Debtor(data.getStringExtra("nameOut"), data.getDoubleExtra("debtOut",0));
-            arrayAdapter.add(newDebetor);
-            arrayAdapter.notifyDataSetChanged();
-            refreshSum();
-        }
-        if (requestCode==EditActivityID){
-            
-        }
+        refreshSum();
     }
 }
 

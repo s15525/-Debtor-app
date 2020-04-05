@@ -16,7 +16,7 @@ public class EditDebtor extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_debtor);
         Button addButton = (Button) findViewById(R.id.zatwierdz);
-
+        Button anulujButton = (Button) findViewById(R.id.anuluj);
         //edit
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
@@ -42,5 +42,14 @@ public class EditDebtor extends AppCompatActivity {
                 finish();
             }
         });
+
+        // return changes
+        anulujButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
     }
 }
