@@ -1,12 +1,3 @@
-PRM Projekt - 01
-Zasady
-● Termin obrony projektów: 06-07.04.2019 r. podczas zajęć swojej grupy
-● W ocenie projektu poza praktyczną i merytoryczną poprawnością będzie brana
-również pod uwagę jakość i czytelność napisanego przez Państwa kodu. [1p]
-● Projekt powinien zostać zaimplementowany z użyciem natywnych narzędzi Android
-SDK (w dowolnym wariancie językowym: kotlin lub java)
-Dusigrosz
-Utwórz aplikację do zarządzania długami Twoich znajomych.
 Aplikacja będzie zawierała 3 ekrany:
 1. Ekran listy długów:
 ● Na ekranie wyświetlana będzie lista dłużników. Dla każdego dłużnika widoczna
