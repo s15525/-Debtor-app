@@ -1,5 +1,6 @@
 package com.example.prm1;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,11 +16,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
 
 public class MainActivity extends AppCompatActivity {
-
+    private final int EditActivityID = 1;
+    private final int AddActivityID = 2;
+    private ArrayAdapter arrayAdapter;
     public ArrayList<Debtor> debtorSet = new ArrayList<Debtor>() {
         {
             add(new Debtor("Wiktoria Sternik", 1000));
@@ -33,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //Wyswietlenie listy z jej objektami
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, android.R.id.text1, debtorSet);
+        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, android.R.id.text1, debtorSet);
         ListView listView = (ListView) findViewById(R.id.listview);
         listView.setAdapter(arrayAdapter);
         //Edit listener
@@ -51,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
                 AlertDialog.Builder adb = new AlertDialog.Builder(MainActivity.this);
                 adb.setTitle("Usun");
                 adb.setMessage("Jestes pewien ze chcesz usunac tego dluznika?");
-                final int positionToRemove = position;
                 adb.setNegativeButton("Cancel", null);
                 adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -81,12 +84,12 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("id", id);
         intent.putExtra("name", name);
         intent.putExtra("debt", debt);
-        startActivityForResult(intent, 1);
+        startActivityForResult(intent, EditActivityID);
     }
 
     private void openAddDebtor() {
         Intent intent = new Intent(this, EditDebtor.class);
-        startActivity(intent);
+        startActivityForResult(intent,AddActivityID);
     }
 
     private void refreshSum() {
@@ -96,4 +99,19 @@ public class MainActivity extends AppCompatActivity {
         TextView textView = (TextView) findViewById(R.id.textView2);
         textView.setText(Double.toString(sum));
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==AddActivityID){
+            Debtor newDebetor = new Debtor(data.getStringExtra("nameOut"), data.getDoubleExtra("debtOut",0));
+            arrayAdapter.add(newDebetor);
+            arrayAdapter.notifyDataSetChanged();
+            refreshSum();
+        }
+        if (requestCode==EditActivityID){
+            
+        }
+    }
 }
+
