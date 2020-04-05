@@ -17,6 +17,7 @@ public class EditDebtor extends AppCompatActivity {
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
         double debt = intent.getDoubleExtra("debt",0);
+        int id = intent.getIntExtra("id",-1);
         TextInputEditText nameFiled = (TextInputEditText) findViewById(R.id.textInputEditText);
         TextInputEditText debtFiled = (TextInputEditText) findViewById(R.id.textInputEditText2);
         nameFiled.setText(name);
