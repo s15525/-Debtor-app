@@ -1,11 +1,14 @@
 package com.example.prm1;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -22,6 +25,7 @@ public class EditDebtor extends AppCompatActivity {
         String name = intent.getStringExtra("name");
         double debt = intent.getDoubleExtra("debt",0);
         int id = intent.getIntExtra("id",-1);
+        boolean itsEdit = intent.getBooleanExtra("itsEdit",false);
         TextInputEditText nameFiled = (TextInputEditText) findViewById(R.id.textInputEditText);
         TextInputEditText debtFiled = (TextInputEditText) findViewById(R.id.textInputEditText2);
         nameFiled.setText(name);
@@ -47,7 +51,20 @@ public class EditDebtor extends AppCompatActivity {
         anulujButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                if(itsEdit) {
+                    AlertDialog.Builder adb = new AlertDialog.Builder(EditDebtor.this);
+                    adb.setTitle("Usun");
+                    adb.setMessage("Jestes pewien ze chcesz wyjsc bez zapisania zmian?");
+                    adb.setNegativeButton("Cancel", null);
+                    adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    });
+                    adb.show();
+                }else{
+                    finish();
+                }
             }
         });
 

@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("id", id);
         intent.putExtra("name", name);
         intent.putExtra("debt", debt);
+        intent.putExtra("itsEdit",true);
         startActivityForResult(intent, EditActivityID);
     }
 
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == RESULT_OK) {
+        if (resultCode == RESULT_OK) {
             if (requestCode == AddActivityID) {
                 Debtor newDebetor = new Debtor(data.getStringExtra("nameOut"), data.getDoubleExtra("debtOut", 0));
                 arrayAdapter.add(newDebetor);
